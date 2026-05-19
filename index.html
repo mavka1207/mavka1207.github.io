@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kateryna Ovsienko · Developer Portfolio</title>
+  <style>
+    :root {
+      --bg: #f7f6f2;
+      --surface: #fbfaf8;
+      --surface-2: #f2efea;
+      --text: #26231c;
+      --text-muted: #6f6c65;
+      --accent: #0f766e;
+      --accent-soft: #d9f3ef;
+      --border: #ddd8cf;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 45px rgba(15, 118, 110, 0.08);
+      --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.05);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+      background: linear-gradient(180deg, #f8f7f4 0%, #f5f3ef 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1100px, calc(100% - 32px)); margin: 0 auto; }
+    .site-header { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(247, 246, 242, 0.82); border-bottom: 1px solid rgba(221, 216, 207, 0.65); }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; min-height: 72px; gap: 20px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.02em; }
+    .brand-mark { width: 38px; height: 38px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #b6f2e9 0%, #0f766e 75%); box-shadow: 0 12px 30px rgba(15, 118, 110, 0.3); flex: 0 0 auto; }
+    .nav { display: flex; flex-wrap: wrap; gap: 18px; font-size: 0.95rem; color: var(--text-muted); }
+    .nav a:hover { color: var(--accent); }
+    main { padding: 34px 0 60px; }
+    .hero { display: grid; grid-template-columns: 1.55fr 1fr; gap: 24px; align-items: stretch; margin-bottom: 34px; }
+    .hero-main, .hero-side, .card, .project-card, .contact-card { background: rgba(251, 250, 248, 0.88); border: 1px solid rgba(221, 216, 207, 0.95); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+    .hero-main { padding: 28px; background: radial-gradient(circle at top left, #e2faf5 0%, #fbfaf8 52%, #fbfaf8 100%); }
+    .hero-kicker { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: var(--radius-pill); background: rgba(15, 118, 110, 0.08); color: var(--accent); font-size: 0.84rem; margin-bottom: 16px; font-weight: 600; }
+    .hero-kicker::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.12); }
+    h1 { margin: 0 0 14px; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.08; letter-spacing: -0.04em; }
+    h1 span { color: var(--accent); }
+    .hero-lead { margin: 0 0 22px; color: var(--text-muted); font-size: 1.02rem; max-width: 42rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 11px 17px; border-radius: var(--radius-pill); border: 1px solid transparent; font-weight: 600; font-size: 0.94rem; transition: 0.2s ease; }
+    .btn-primary { background: var(--accent); color: white; box-shadow: 0 10px 20px rgba(15, 118, 110, 0.18); }
+    .btn-primary:hover { background: #0b5f59; transform: translateY(-1px); }
+    .btn-secondary { background: white; color: var(--text); border-color: var(--border); }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px 16px; color: var(--text-muted); font-size: 0.9rem; }
+    .hero-side { padding: 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 18px; }
+    .mini-label { display: inline-block; padding: 4px 10px; border-radius: var(--radius-pill); background: var(--accent-soft); color: var(--accent); font-size: 0.78rem; font-weight: 700; width: fit-content; }
+    .hero-side h2 { margin: 10px 0 8px; font-size: 1.15rem; line-height: 1.2; }
+    .hero-side p { margin: 0; color: var(--text-muted); font-size: 0.95rem; }
+    .quick-points { display: grid; gap: 10px; }
+    .quick-point { padding: 12px 14px; border-radius: var(--radius-md); background: white; border: 1px solid rgba(221, 216, 207, 0.9); font-size: 0.92rem; color: var(--text-muted); }
+    .section { margin-top: 24px; }
+    .section-title { margin: 0 0 12px; font-size: 0.83rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); font-weight: 800; }
+    .card { padding: 22px; }
+    .card p { margin: 0 0 12px; color: var(--text-muted); }
+    .card p:last-child { margin-bottom: 0; }
+    .projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .project-card { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+    .project-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .project-title { margin: 0; font-size: 1.1rem; line-height: 1.2; }
+    .project-badge { padding: 4px 10px; border-radius: var(--radius-pill); background: rgba(15, 118, 110, 0.08); color: var(--accent); font-size: 0.76rem; white-space: nowrap; font-weight: 700; }
+    .project-card p { margin: 0; color: var(--text-muted); font-size: 0.94rem; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+    .chip { padding: 5px 10px; border-radius: var(--radius-pill); background: white; border: 1px solid rgba(221, 216, 207, 0.95); font-size: 0.8rem; color: var(--text-muted); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .list { margin: 0; padding-left: 18px; color: var(--text-muted); }
+    .list li + li { margin-top: 8px; }
+    .skills-group + .skills-group { margin-top: 14px; }
+    .skills-label { font-weight: 700; margin-bottom: 8px; display: block; }
+    .contact-card { padding: 22px; display: grid; grid-template-columns: 1.2fr auto; gap: 20px; align-items: center; }
+    .contact-card p { margin: 0; color: var(--text-muted); }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+    .contact-link { padding: 10px 14px; border-radius: var(--radius-pill); background: white; border: 1px solid rgba(221, 216, 207, 0.95); font-size: 0.9rem; font-weight: 600; }
+    .contact-link:hover { color: var(--accent); border-color: rgba(15, 118, 110, 0.35); }
+    footer { padding-top: 28px; color: var(--text-muted); font-size: 0.84rem; text-align: center; }
+    @media (max-width: 900px) { .hero, .projects-grid, .two-col, .contact-card { grid-template-columns: 1fr; } .contact-links { justify-content: flex-start; } }
+    @media (max-width: 640px) { .header-inner { flex-direction: column; align-items: flex-start; padding: 12px 0; } .nav { gap: 12px; } .hero-main, .hero-side, .card, .project-card, .contact-card { padding: 18px; } h1 { font-size: 2rem; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="Kateryna Ovsienko home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Kateryna Ovsienko</span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main id="top">
+    <div class="container">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-main">
+          <div class="hero-kicker">QA engineer turned developer</div>
+          <h1 id="hero-title">Hi, I’m <span>Kateryna</span> — a software development student at grit:lab building clean, reliable, user-focused applications.</h1>
+          <p class="hero-lead">I work mainly with Flutter and frontend projects, and I bring a strong quality mindset from my QA background into everything I build.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">View projects</a>
+            <a class="btn btn-secondary" href="#contact">Get in touch</a>
+          </div>
+          <div class="hero-meta">
+            <span>Based in Mariehamn, Åland</span>
+            <span>Flutter & frontend focus</span>
+            <span>4+ years in QA</span>
+          </div>
+        </div>
+        <aside class="hero-side" aria-label="Quick summary">
+          <div>
+            <span class="mini-label">Current snapshot</span>
+            <h2>From testing web products to building them</h2>
+            <p>I’m finishing my studies at grit:lab and growing through hands-on development projects in Flutter, frontend logic, APIs, and practical product work.</p>
+          </div>
+          <div class="quick-points">
+            <div class="quick-point">Strong attention to quality, edge cases, and user flow.</div>
+            <div class="quick-point">Interested in practical apps, clear interfaces, and polished interactions.</div>
+            <div class="quick-point">Background in QA engineering and team coordination on web projects.</div>
+          </div>
+        </aside>
+      </section>
+      <section class="section" id="about">
+        <h2 class="section-title">About</h2>
+        <div class="card">
+          <p>Before moving into development, I worked for about four years as a QA engineer and team lead on web projects. That experience taught me to think carefully about product quality, communication, user flow, and edge cases.</p>
+          <p>Now I’m finishing my software development studies at grit:lab, where I’ve been building hands-on projects and strengthening my skills in Flutter, frontend logic, APIs, and application structure. I enjoy creating interfaces that feel clear, practical, and well thought out.</p>
+          <p>What I bring from QA into development is attention to detail, structured thinking, and the habit of looking beyond the happy path. I like building features that are not only functional, but also reliable and polished.</p>
+        </div>
+      </section>
+      <section class="section" id="projects">
+        <h2 class="section-title">Featured projects</h2>
+        <div class="projects-grid">
+          <article class="project-card">
+            <div class="project-top"><h3 class="project-title">Flutter 2048</h3><span class="project-badge">Game · Flutter</span></div>
+            <p>A Flutter version of the 2048 game focused on polished gameplay, movement logic, and interface details. I worked on tile merging behavior, game-over handling, and improving the UI so the experience feels smoother and more predictable.</p>
+            <div class="chip-row"><span class="chip">Flutter</span><span class="chip">Dart</span><span class="chip">Game logic</span><span class="chip">UI polish</span></div>
+          </article>
+          <article class="project-card">
+            <div class="project-top"><h3 class="project-title">Sky Map</h3><span class="project-badge">Mobile · Real-time</span></div>
+            <p>A Flutter mobile app that uses GPS, sensors, and external APIs to display celestial objects in real time. This project helped me work with reactive updates, device data, and a more complex app structure.</p>
+            <div class="chip-row"><span class="chip">Flutter</span><span class="chip">Provider</span><span class="chip">GPS & sensors</span><span class="chip">HTTP APIs</span></div>
+          </article>
+          <article class="project-card">
+            <div class="project-top"><h3 class="project-title">Stock Market App</h3><span class="project-badge">Data · Flows</span></div>
+            <p>A Flutter stock market project focused on stock details, charts, buy/sell flows, local database logic, and real-time updates. It gave me experience with data-driven UI and structuring app features around user actions.</p>
+            <div class="chip-row"><span class="chip">Flutter</span><span class="chip">Charts</span><span class="chip">Local DB</span><span class="chip">Mock backend</span></div>
+          </article>
+          <article class="project-card">
+            <div class="project-top"><h3 class="project-title">Secure Notes</h3><span class="project-badge">App · Security</span></div>
+            <p>A secure notes app with note CRUD, biometric security, and cleaner internal structure. It was a good project for practicing architecture and balancing functionality with a simple user experience.</p>
+            <div class="chip-row"><span class="chip">Flutter</span><span class="chip">CRUD</span><span class="chip">Biometric auth</span><span class="chip">Clean structure</span></div>
+          </article>
+        </div>
+      </section>
+      <section class="section" id="skills">
+        <h2 class="section-title">How I work & skills</h2>
+        <div class="two-col">
+          <div class="card">
+            <h3 style="margin-top:0; margin-bottom:12px;">How I work</h3>
+            <ul class="list">
+              <li>I like to understand the problem before jumping into implementation.</li>
+              <li>I pay attention to user flow, edge cases, and small UI details.</li>
+              <li>I enjoy improving the parts of a product that make it feel more polished and intentional.</li>
+              <li>I bring a testing mindset into development, which helps me think about reliability as well as functionality.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="margin-top:0; margin-bottom:12px;">Skills</h3>
+            <div class="skills-group">
+              <span class="skills-label">Core</span>
+              <div class="chip-row"><span class="chip">Flutter / Dart</span><span class="chip">Frontend development</span><span class="chip">UI implementation</span><span class="chip">State management</span></div>
+            </div>
+            <div class="skills-group">
+              <span class="skills-label">Also worked with</span>
+              <div class="chip-row"><span class="chip">REST APIs</span><span class="chip">Git / GitHub</span><span class="chip">QA processes</span><span class="chip">Automation & n8n</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <h2 class="section-title">Current focus</h2>
+        <div class="card">
+          <p>Right now, I’m focused on growing as a developer through hands-on work in Flutter, frontend projects, and practical product development. I’m especially interested in building clean interfaces, improving app structure, and continuing to explore automation workflows.</p>
+        </div>
+      </section>
+      <section class="section" id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-card">
+          <p>I’m currently finishing my studies at grit:lab and looking for junior or trainee opportunities where I can continue growing as a developer. If you’d like to talk about projects, collaboration, or open roles, I’d be glad to connect.</p>
+          <div class="contact-links">
+            <a class="contact-link" href="mailto:ketio403@gmail.com">Email</a>
+            <a class="contact-link" href="https://github.com/mavka1207" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="contact-link" href="https://www.linkedin.com/in/kateryna-ovsiienko-1a4447198" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+        </div>
+      </section>
+      <footer>© 2026 Kateryna Ovsienko · Portfolio</footer>
+    </div>
+  </main>
+</body>
+</html>
