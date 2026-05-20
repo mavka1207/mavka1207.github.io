@@ -21,11 +21,8 @@
       --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.05);
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth;
-    scroll-padding-top: 90px; }
-    section[id] {
-  scroll-margin-top: 90px;
-}
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    section[id] { scroll-margin-top: 90px; }
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
@@ -44,9 +41,9 @@
     .nav { display: flex; flex-wrap: wrap; gap: 18px; font-size: 0.95rem; color: var(--text-muted); }
     .nav a:hover { color: var(--accent); }
     main { padding: 34px 0 60px; }
-    .hero { display: grid; grid-template-columns: 1.55fr 1fr; gap: 24px; align-items: stretch; margin-bottom: 34px; }
+    .hero { position: relative; display: grid; grid-template-columns: 1.55fr 1fr; gap: 24px; align-items: stretch; margin-bottom: 34px; }
     .hero-main, .hero-side, .card, .project-card, .contact-card { background: rgba(251, 250, 248, 0.88); border: 1px solid rgba(221, 216, 207, 0.95); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
-    .hero-main { padding: 28px; background: radial-gradient(circle at top left, #e2faf5 0%, #fbfaf8 52%, #fbfaf8 100%); }
+    .hero-main { position: relative; overflow: hidden; padding: 28px; background: radial-gradient(circle at top left, #e2faf5 0%, #fbfaf8 52%, #fbfaf8 100%); }
     .hero-kicker { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: var(--radius-pill); background: rgba(15, 118, 110, 0.08); color: var(--accent); font-size: 0.84rem; margin-bottom: 16px; font-weight: 600; }
     .hero-kicker::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.12); }
     h1 { margin: 0 0 14px; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.08; letter-spacing: -0.04em; }
@@ -89,8 +86,72 @@
     .contact-link { padding: 10px 14px; border-radius: var(--radius-pill); background: white; border: 1px solid rgba(221, 216, 207, 0.95); font-size: 0.9rem; font-weight: 600; }
     .contact-link:hover { color: var(--accent); border-color: rgba(15, 118, 110, 0.35); }
     footer { padding-top: 28px; color: var(--text-muted); font-size: 0.84rem; text-align: center; }
+
+    .bug-runner {
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.96);
+      box-shadow: 0 10px 25px rgba(15, 118, 110, 0.18);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .bug-runner:hover { transform: scale(1.06); box-shadow: 0 14px 28px rgba(15,118,110,0.22); }
+    .bug-runner svg { width: 22px; height: 22px; stroke: var(--accent); }
+    .bug-runner.is-fixed { animation: none !important; transform: scale(0.92); opacity: 0.75; }
+    .bug-tooltip {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(38,35,28,0.92);
+      color: white;
+      font-size: 0.82rem;
+      max-width: 220px;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: .2s ease;
+    }
+    .hero-main:hover .bug-tooltip { opacity: 1; transform: translateY(0); }
+
+    dialog.bug-modal {
+      width: min(520px, calc(100% - 28px));
+      border: 1px solid rgba(221, 216, 207, 0.95);
+      border-radius: 20px;
+      padding: 0;
+      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.18);
+      background: #fffdf9;
+    }
+    dialog.bug-modal::backdrop { background: rgba(38, 35, 28, 0.38); backdrop-filter: blur(2px); }
+    .bug-modal-inner { padding: 24px; }
+    .bug-modal-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
+    .bug-modal-title { margin: 0; font-size: 1.25rem; }
+    .bug-modal-close {
+      width: 38px; height: 38px; border: 1px solid var(--border); border-radius: 50%; background: white; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .bug-modal p { margin: 0; color: var(--text-muted); }
+    .bug-modal-actions { margin-top: 18px; display: flex; justify-content: flex-start; }
+
     @media (max-width: 900px) { .hero, .projects-grid, .two-col, .contact-card { grid-template-columns: 1fr; } .contact-links { justify-content: flex-start; } }
-    @media (max-width: 640px) { .header-inner { flex-direction: column; align-items: flex-start; padding: 12px 0; } .nav { gap: 12px; } .hero-main, .hero-side, .card, .project-card, .contact-card { padding: 18px; } h1 { font-size: 2rem; } }
+    @media (max-width: 640px) {
+      .header-inner { flex-direction: column; align-items: flex-start; padding: 12px 0; }
+      .nav { gap: 12px; }
+      .hero-main, .hero-side, .card, .project-card, .contact-card { padding: 18px; }
+      h1 { font-size: 2rem; }
+      .bug-runner { width: 42px; height: 42px; }
+      .bug-tooltip { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -111,7 +172,18 @@
   <main id="top">
     <div class="container">
       <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-main">
+        <div class="hero-main" id="hero-bug-zone">
+          <button class="bug-runner" id="bugRunner" aria-label="Catch the bug" title="Catch the bug">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M8 9h8"/>
+              <path d="M9 5.5 12 3l3 2.5"/>
+              <path d="M8 13c0-2.2 1.8-4 4-4s4 1.8 4 4v2.5c0 2.5-1.8 4.5-4 4.5s-4-2-4-4.5V13Z"/>
+              <path d="M4 13h4"/><path d="M16 13h4"/>
+              <path d="M5.5 8.5 8 10"/><path d="M18.5 8.5 16 10"/>
+              <path d="M6 18l2.5-1.5"/><path d="M18 18 15.5 16.5"/>
+            </svg>
+          </button>
+          <div class="bug-tooltip">Psst... catch the bug.</div>
           <div class="hero-kicker">QA engineer turned developer</div>
           <h1 id="hero-title">Hi, I’m <span>Kateryna</span> — a software development student at grit:lab building clean, reliable, user-focused applications.</h1>
           <p class="hero-lead">I work mainly with Flutter and frontend projects, and I bring a strong quality mindset from my QA background into everything I build.</p>
@@ -216,5 +288,89 @@
       <footer>© 2026 Kateryna Ovsienko · Portfolio</footer>
     </div>
   </main>
+
+  <dialog class="bug-modal" id="bugModal" aria-labelledby="bugModalTitle">
+    <div class="bug-modal-inner">
+      <div class="bug-modal-top">
+        <h2 class="bug-modal-title" id="bugModalTitle">Bug fixed!</h2>
+        <button class="bug-modal-close" id="bugClose" aria-label="Close dialog">✕</button>
+      </div>
+      
+<p>The QA habit is still here, but now I not only find bugs — I fix them too. Welcome to my portfolio!</p>
+      <div class="bug-modal-actions">
+        <button class="btn btn-primary" id="bugFixedBtn">Fixed</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    (function () {
+      const bug = document.getElementById('bugRunner');
+      const zone = document.getElementById('hero-bug-zone');
+      const modal = document.getElementById('bugModal');
+      const closeBtn = document.getElementById('bugClose');
+      const fixedBtn = document.getElementById('bugFixedBtn');
+      if (!bug || !zone || !modal) return;
+
+      let frame;
+      function moveBug() {
+        if (window.innerWidth < 640 || bug.classList.contains('is-fixed')) return;
+        const zoneRect = zone.getBoundingClientRect();
+        const pad = 18;
+        const maxX = Math.max(pad, zoneRect.width - bug.offsetWidth - pad);
+        const maxY = Math.max(pad, zoneRect.height - bug.offsetHeight - pad);
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+        bug.animate([
+          { transform: `translate(${bug.dataset.x || 0}px, ${bug.dataset.y || 0}px) rotate(0deg)` },
+          { transform: `translate(${x}px, ${y}px) rotate(${Math.random() > 0.5 ? 8 : -8}deg)` }
+        ], {
+          duration: 2200,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          fill: 'forwards'
+        });
+        bug.dataset.x = x;
+        bug.dataset.y = y;
+        clearTimeout(frame);
+        frame = setTimeout(moveBug, 2500 + Math.random() * 1800);
+      }
+
+      function openModal() {
+        clearTimeout(frame);
+        bug.classList.add('is-fixed');
+        if (typeof modal.showModal === 'function') {
+          modal.showModal();
+        } else {
+          modal.setAttribute('open', 'open');
+        }
+      }
+
+      function closeModal() {
+        modal.close ? modal.close() : modal.removeAttribute('open');
+      }
+
+      bug.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      fixedBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        const rect = modal.getBoundingClientRect();
+        const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+        if (!inside) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.hasAttribute('open')) closeModal();
+      });
+
+      window.addEventListener('load', () => setTimeout(moveBug, 700));
+      window.addEventListener('resize', () => {
+        if (window.innerWidth < 640) {
+          clearTimeout(frame);
+          bug.style.transform = 'translate(0,0)';
+        } else if (!bug.classList.contains('is-fixed')) {
+          moveBug();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
